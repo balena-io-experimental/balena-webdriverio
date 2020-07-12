@@ -51,8 +51,6 @@ exports.config = {
           binary: "/usr/bin/chromium-browser",
           args: ["headless", "disable-gpu", "no-sandbox"]
         },
-        "browserVersion": 'latest',
-        "platformName": 'Linux',
       }],
     //
     // ===================
