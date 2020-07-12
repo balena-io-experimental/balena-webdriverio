@@ -1,14 +1,14 @@
-FROM balenalib/armv7hf-ubuntu:latest
+FROM balenalib/armv7hf-ubuntu-node:latest
 
 ENV NODE_VERSION 10.20.1
 ENV NPM_VERSION 6.14.4
 ENV NVM_DIR /usr/local/nvm
-
+USER root
 WORKDIR /home/vipulgupta2048/work/webdriverio-test
 
-#================================================
+# ================================================
 # Customize sources for apt-get
-#================================================
+# ================================================
 RUN  echo "deb http://ports.ubuntu.com/ubuntu-ports/ bionic main\n" > /etc/apt/sources.list \
     && echo "deb-src http://ports.ubuntu.com/ubuntu-ports/ bionic main\n" >> /etc/apt/sources.list \
     && echo "deb http://ports.ubuntu.com/ubuntu-ports/ bionic-updates main\n" >> /etc/apt/sources.list \
@@ -21,26 +21,20 @@ RUN  echo "deb http://ports.ubuntu.com/ubuntu-ports/ bionic main\n" > /etc/apt/s
 ENV DEBIAN_FRONTEND=noninteractive \
     DEBCONF_NONINTERACTIVE_SEEN=true
 
-RUN apt-get -qqy update && apt-get -qqy --no-install-recommends install -y netcat curl jq git-core gcc g++ make  \
-    && curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.2/install.sh | bash \
-    && source $NVM_DIR/nvm.sh   \
-    && nvm install $NODE_VERSION  \
-    && nvm alias default $NODE_VERSION  \
-    && nvm use default \
-    && rm -rf /var/lib/apt/lists/* /var/cache/apt/* \
-    && apt-get -qyy clean
+RUN apt-get update -qqy \
+  && apt-get -qqy install chromium-browser git-core python3 gcc g++ build-essential --yes \
+  && rm -rf /var/lib/apt/lists/* /var/cache/apt/* \
+  && apt-get -qyy clean
 
+# RUN mkdir /tests
+# COPY . /tests
 
-RUN node --version && npm --version 
+ADD . /tests
+WORKDIR /tests
 
+RUN npm install -g node-gyp node-pre-gyp webdriverio prebuild-install \
+    && npm install \
+    && rm -rf /tmp/* \
+    && npm cache clear --force 
 
-# ENV NODE_PATH $NVM_DIR/v$NODE_VERSION/lib/node_modules
-# ENV PATH $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
-
-## ADD PACKAGE.JSON HERE 
-## ADd tests code here and expose ports
-
-# RUN npm install -g node-gyp node-pre-gyp prebuild-install \
-    # && rm -rf /tmp/* \
-    # && npm ci --production \
-    # && npm cache clear --force \
+RUN npx wdio wdio.conf -y
