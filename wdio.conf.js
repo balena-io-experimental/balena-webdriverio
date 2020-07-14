@@ -7,6 +7,7 @@ exports.config = {
     // WebdriverIO allows it to run your tests in arbitrary locations (e.g. locally or
     // on a remote machine).
     runner: 'local',
+    automationProtocol: 'devtools',
     //
     // ==================
     // Specify Test Files
@@ -99,7 +100,7 @@ exports.config = {
     // Services take over a specific job you don't want to take care of. They enhance
     // your test setup with almost no effort. Unlike plugins, they don't add new
     // commands. Instead, they hook themselves up into the test process.
-    services: ['devtools'],
+    services: [],
     
     // Framework you want to run your specs with.
     // The following are supported: Mocha, Jasmine, and Cucumber
@@ -118,10 +119,7 @@ exports.config = {
     // Test reporter for stdout.
     // The only one supported by default is 'dot'
     // see also: https://webdriver.io/docs/dot-reporter.html
-    reporters: ['spec'],
-
-
-    
+    reporters: ['spec'],    
     //
     // Options to be passed to Mocha.
     // See the full list at http://mochajs.org/
