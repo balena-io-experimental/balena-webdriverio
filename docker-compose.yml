@@ -1,7 +1,8 @@
 version: '2'
 services:
   webdriver:
+    restart: no
     build: 
       context: .
     privileged: true
-    network: host
+    network_mode: host

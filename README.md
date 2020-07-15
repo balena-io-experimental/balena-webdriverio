@@ -1,48 +1,69 @@
-## Running WebdriverIO + Chromium with ChromeDev Tools Protocol
+## balenaCloud + WebdriverIO using Chromium on ARM Devices
 
-More about what this protocol is all about - https://webdriver.io/blog/2019/09/16/devtools.html
-Also, a comparison with past and present explaining why we won't need a Chromedriver now - https://webdriver.io/docs/automationProtocols.html#devtools-protocol
+> Superior web automation now becomes portable, with high-performance ARM-based devices.
 
-## How to get started?
-1. `git clone git@github.com:vipulgupta2048/psychic-octo-barnacle.git webdriver`
-2. `cd webdriver`
-3. `npm install` 
-4. `sudo apt install chromium-browser git-core python3 gcc g++ make` or similar for MacOS. Most you would already have.
-5. `npx wdio wdio.conf.js -y`
+This repository contains code of [Getting Started with Webdriverio](https://webdriver.io/docs/gettingstarted.html) compatible to run as a service on balenaCloud with any balenaOS ARM device such as BalenaFin, Raspberrypi3 and more. Tested on [balenaFin](https://www.balena.io/fin) running balenaOS 2.48.0+rev1  
 
-Runs best on Node --> v12.18.2, 
+![](https://webdriver.io/img/devtools.png)  
 
-## How to run it on your device on BalenaCloud?
-1. Grab a balenaFin, flash with configuration for `webdriver-e2e` application or just move a online device if you have to the application.
-2. The device won't auto run the test, since I wanted to debug it first. 
-3. SSH into the `webdriver` service
-4. `npx wdio wdio.conf.js -y`
+Illustration Source: [WebdriverIO docs](https://webdriver.io/docs/automationProtocols.html#devtools-protocol) 
 
-## Problems 
-As you can see, it runs like a charm locally (I hope) and much better, faster. It's driver independent. Running directly using Chrome DevTools protocol.
+Chromedriver and Selenium not being available for the ARM architecture. Lead us to work with WebDriverIO for our web automation and testing needs, which uses [Chrome DevTools protocol](https://webdriver.io/blog/2019/09/16/devtools.html) by default. Using Chrome Devtools protocol natively and replacing legacy Webdriver Protocol comes with many benefits. Some being: 
 
-In the container though, we get the error 
+- Lesser dependencies to manage
+- Works natively with major browsers without the need for a driver (even Firefox)
+- Faster, more efficient performance (The communication happens without any proxy, directly to the browser using WebSockets)
+- Be able to test browser performance and much more. 
+
+It has cons too which are better explained on [WebdriverIO Automation protocols](https://webdriver.io/docs/automationProtocols.html#devtools-protocol) page. Mainly, it can't be used remotely which works out for us as we run everything in containers. Let's get started.
+
+## Quick installation for local testing
+
+1. Clone the repository using 
 
 ```
-[0-0] 2020-07-14T14:43:04.299Z INFO devtools: Launch Google Chrome with flags: --disable-extensions --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-sync --metrics-recording-only --disable-default-apps --mute-audio --no-first-run --disable-hang-monitor --disable-prompt-on-repost --disable-client-side-phishing-detection --password-store=basic --use-mock-keychain --disable-component-extensions-with-background-pages --disable-breakpad --disable-dev-shm-usage --disable-ipc-flooding-protection --disable-renderer-backgrounding --enable-features=NetworkService,NetworkServiceInProcess --disable-features=site-per-process,TranslateUI,BlinkGenPropertyTrees --window-position=0,0 --window-size=1200,900 headless disable-gpu no-sandbox
-
-[0-0] 2020-07-14T14:43:29.598Z ERROR @wdio/runner: Error: connect ECONNREFUSED 127.0.0.1:50653
-    at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1141:16)
-[0-0]  Error:  connect ECONNREFUSED 127.0.0.1:50653
-
-[0-0] FAILED in chrome - /test/specs/basic.js
-2020-07-14T14:43:29.750Z INFO @wdio/cli:launcher: Run onComplete hook
-
-Spec Files:	 0 passed, 1 failed, 1 total (100% completed) in 00:00:28 
-
-2020-07-14T14:43:29.756Z INFO @wdio/local-runner: Shutting down spawned worker
-2020-07-14T14:43:30.013Z INFO @wdio/local-runner: Waiting for 0 to shut down gracefully
-2020-07-14T14:43:30.016Z INFO @wdio/local-runner: shutting down
+git clone REPO_URL
 ```
 
-Debugging steps taken to resolve this error 
-- Change `network_mode` to `host` (I thought it to be a port issue at first)
-- Talked with maintainer, if we can get puppeteer to connect at one specific port and not random ones. https://gitter.im/webdriverio/webdriverio?at=5f0c9491f017fc46213a60d1
-- Tried finding the code in Devtools package where ports are being set. No mention of ports at all. 
-- There are several solutions for this problem online, but they all relate to selenium server not running. Obviously we are not running Selenium. Check this out https://blog.kevinlamping.com/common-selenium-and-webdriverio-error-messages/#errorconnecteconnrefused1270014444 (But now that I think about it. Have to check my local system but highly unlikely)
-- And, several more. 
+1. Navigate to the cloned repository in your system.
+2. In the terminal run the command,
+
+```      
+sudo apt install chromium-browser git-core python3 gcc g++ make
+```
+
+1. Next, install the dependencies. If you don't have Node installed, then install the [latest Node LTS](https://nodejs.org/en/download/) version. 
+
+```
+npm install
+```
+ 
+1. Run Webdriver. 
+
+```
+npx wdio wdio.conf.js -y
+```
+
+The tests will run, open Chromium browser with the arguments provided in the [wdio.conf.js](https://github.com/vipulgupta2048/balena-webdriverio/blob/master/wdio.conf.js) file, connect puppeteer with the browser, and execute the tests. In the end, you would see test results over on the terminal.
+
+
+## Run Webdriver on balenaCloud
+
+[![](https://www.balena.io/deploy.png)](https://dashboard.balena-cloud.com/deploy)
+
+1. Grab a balenaFin, flash with the configuration for the application you just deployed, connect it, and wait for the magic to happen.
+2. Head over to the balenaCloud application to see if your device is online (It take at most 2-5 minutes)
+3. When done, the device would automatically start downloading the latest docker image and when done will run the tests. 
+4. You can check the output in the logs on your balenaCloud dashboard
+   
+![](https://user-images.githubusercontent.com/22801822/87546279-ebcb1280-c6c6-11ea-91b5-6ae202fb21fd.png)
+Webdriverio Testrunner running on BalenaFin over on Balena Cloud 
+
+That's about it, now you can modify your tests from the tests folder (Written using Mocha) and explore more into Web automation and Webdriverio
+
+## Support & Credits
+For any queries or bug reports, feel free to open an issue.
+Thanks to Christian Bromann for his help! 
+
+## License 
+All source code under this repository is MIT licensed.

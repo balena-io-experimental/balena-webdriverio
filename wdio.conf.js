@@ -50,7 +50,7 @@ exports.config = {
         browserName: "chrome",
         'goog:chromeOptions':{
           binary: "/usr/bin/chromium-browser",
-          args: ["headless", "disable-gpu", "no-sandbox"]
+          args: ["--headless", "--disable-gpu", "--no-sandbox"]
         },
       }],
     //
