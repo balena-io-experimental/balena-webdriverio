@@ -25,20 +25,20 @@ It has cons too which are better explained on [WebdriverIO Automation protocols]
 git clone REPO_URL
 ```
 
-1. Navigate to the cloned repository in your system.
-2. In the terminal run the command,
+2. Navigate to the cloned repository in your system.
+3. In the terminal run the command,
 
 ```      
 sudo apt install chromium-browser git-core python3 gcc g++ make
 ```
 
-1. Next, install the dependencies. If you don't have Node installed, then install the [latest Node LTS](https://nodejs.org/en/download/) version. 
+4. Next, install the dependencies. If you don't have Node installed, then install the [latest Node LTS](https://nodejs.org/en/download/) version. 
 
 ```
 npm install
 ```
  
-1. Run Webdriver. 
+5. Run Webdriver. 
 
 ```
 npx wdio wdio.conf.js -y
