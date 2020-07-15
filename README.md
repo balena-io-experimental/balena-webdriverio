@@ -2,10 +2,10 @@
 
 > Superior web automation now becomes portable, with high-performance ARM-based devices.
 
-This repository contains code of [Getting Started with Webdriverio](https://webdriver.io/docs/gettingstarted.html) compatible to run as a service on balenaCloud with any balenaOS ARM device such as BalenaFin, Raspberrypi3 and more. Tested on [balenaFin](https://www.balena.io/fin) running balenaOS 2.48.0+rev1
+This repository contains code of [Getting Started with Webdriverio](https://webdriver.io/docs/gettingstarted.html) compatible to run as a service on balenaCloud with any balenaOS ARM device such as BalenaFin, Raspberrypi3 and more. Tested on [balenaFin](https://www.balena.io/fin) running balenaOS 2.48.0+rev1  
 
+![](https://webdriver.io/img/devtools.png)  
 
-![](https://webdriver.io/img/devtools.png)
 Illustration Source: [WebdriverIO docs](https://webdriver.io/docs/automationProtocols.html#devtools-protocol) 
 
 Chromedriver and Selenium not being available for the ARM architecture. Lead us to work with WebDriverIO for our web automation and testing needs, which uses [Chrome DevTools protocol](https://webdriver.io/blog/2019/09/16/devtools.html) by default. Using Chrome Devtools protocol natively and replacing legacy Webdriver Protocol comes with many benefits. Some being: 
@@ -64,3 +64,6 @@ That's about it, now you can modify your tests from the tests folder (Written us
 ## Support & Credits
 For any queries or bug reports, feel free to open an issue.
 Thanks to Christian Bromann for his help! 
+
+## License 
+All source code under this repository is MIT licensed.
