@@ -18,7 +18,7 @@ exports.config = {
     // directory is where your package.json resides, so `wdio` will be called from there.
     //
     specs: [
-        './test/specs/**/*.js'
+        './tests/specs/**/*.js'
     ],
     // Patterns to exclude.
     exclude: [
@@ -46,11 +46,12 @@ exports.config = {
     // Sauce Labs platform configurator - a great tool to configure your capabilities:
     // https://docs.saucelabs.com/reference/platforms-configurator
     //
-    capabilities: [{
+	capabilities: [{
         browserName: "chrome",
         'goog:chromeOptions':{
           binary: "/usr/bin/chromium-browser",
-          args: ["--headless", "--disable-gpu", "--no-sandbox"]
+          // args: ["--headless", "--disable-gpu", "--no-sandbox"]
+          args: ["file:///home/chromium/index.html", "--headless", "--disable-gpu", "--no-sandbox","--disable-dev-shm-usage", "--autoplay-policy=no-user-gesture-required", "--noerrdialogs", "--disable-session-crashed-bubble",   "--check-for-update-interval=31536000"]
         },
       }],
     //
@@ -60,7 +61,7 @@ exports.config = {
     // Define all options that are relevant for the WebdriverIO instance here
     //
     // Level of logging verbosity: trace | debug | info | warn | error | silent
-    logLevel: 'info',
+    logLevel: 'error',
     //
     // Set specific log levels per logger
     // loggers:
@@ -84,7 +85,7 @@ exports.config = {
     // with `/`, the base url gets prepended, not including the path portion of your baseUrl.
     // If your `url` parameter starts without a scheme or `/` (like `some/path`), the base url
     // gets prepended directly.
-    baseUrl: 'http://localhost',
+    // baseUrl: '',
     //
     // Default timeout for all waitFor* commands.
     waitforTimeout: 10000,

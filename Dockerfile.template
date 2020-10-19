@@ -1,0 +1,30 @@
+FROM balenablocks/browser:%%BALENA_MACHINE_NAME%%
+
+USER root
+
+SHELL [ "/bin/bash", "-l", "-c" ]
+
+RUN touch /root/.curlrc
+RUN echo "-k" > ~/.curlrc
+
+# RUN mkdir /root/.nvm/
+# RUN curl --silent --insecure -o- https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash
+# # this now works
+# # RUN nvm use v12.18.4
+# RUN nvm install v12.18.4
+# RUN nvm use --delete-prefix v12.18.4
+
+RUN install_packages git-core python2.7 python-dev python-pip gcc g++ make build-essential
+RUN curl -sL https://deb.nodesource.com/setup_12.x | bash -
+RUN sudo apt-get install -y nodejs
+
+COPY . /tests
+WORKDIR /tests
+RUN pip install ast
+RUN npm install -g node-gyp node-pre-gyp
+RUN npm install \
+    && rm -rf /tmp/* \
+    && npm cache clear --force
+
+# CMD ["npx", "wdio", "wdio.conf.js", "-y"]
+CMD ["tail", "-f", "/dev/null"]

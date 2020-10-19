@@ -1,8 +1,14 @@
 version: '2'
+
+volumes:
+  settings:                          # Only required if using PERSISTENT flag (see below)
+
 services:
-  webdriver:
+
+  browser:
+    build: ./
+    privileged: true # required for UDEV to find plugged in peripherals such as a USB mouse
     restart: no
-    build: 
-      context: .
-    privileged: true
     network_mode: host
+    volumes:
+      - 'settings:/data' # Only required if using PERSISTENT flag (see below)

@@ -16,9 +16,5 @@
     "@wdio/spec-reporter": "^6.1.23",
     "@wdio/sync": "^6.1.14",
     "devtools": "^6.2.0"
-  },
-  "engines": {
-    "node": "10.x"
-  },
-  "dependencies": {}
+  }
 }
