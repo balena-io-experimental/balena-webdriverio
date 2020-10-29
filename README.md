@@ -2,7 +2,7 @@
 
 > Superior web automation now becomes portable, with high-performance ARM-based devices.
 
-This repository contains code of [Getting Started with Webdriverio](https://webdriver.io/docs/gettingstarted.html) compatible to run as a service on balenaCloud with any balenaOS ARM device such as BalenaFin, Raspberrypi3 and more. Tested on [balenaFin](https://www.balena.io/fin) running balenaOS 2.48.0+rev1  
+This repository contains code of [Getting Started with Webdriverio](https://webdriver.io/docs/gettingstarted.html) compatible to run as a service on balenaCloud with any balenaOS ARM device such as balenaFin, Raspberrypi3 and more. Tested on [balenaFin](https://www.balena.io/fin) running balenaOS 2.48.0+rev1  
 
 ![](https://webdriver.io/img/devtools.png)  
 
@@ -27,7 +27,7 @@ It has cons too which are better explained on [WebdriverIO Automation protocols]
 4. You can check the output in the logs on your balenaCloud dashboard
    
 ![](https://user-images.githubusercontent.com/22801822/87546279-ebcb1280-c6c6-11ea-91b5-6ae202fb21fd.png)
-Webdriverio Testrunner running on BalenaFin over on Balena Cloud 
+Webdriverio Testrunner running on balenaFin over on balenaCloud 
 
 The tests will run, open Chromium browser with the arguments provided in the [wdio.conf.js](https://github.com/vipulgupta2048/balena-webdriverio/blob/master/wdio.conf.js) file, connect puppeteer with the browser, and execute the tests. In the end, you would see test results over on the terminal. That's about it, now you can modify your tests from the tests folder (Written using Mocha) and explore more into Web automation and Webdriverio. If you are [new to balenaCloud](https://www.balena.io/docs/learn/getting-started/fincm3/nodejs/) as well, we got you covered.
 
